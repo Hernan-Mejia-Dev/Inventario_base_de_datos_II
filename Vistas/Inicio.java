@@ -175,7 +175,7 @@ public class Inicio extends javax.swing.JFrame {
         //iniciamos el modelo excel
         ModeloExcel modeloE = new ModeloExcel();
         //inicializamos el controlador del excel
-        ControladorExcel ControladorExcel = new ControladorExcel(f1, modeloE,FormularioLista.Lista);
+        ControladorExcel ContraControladorExcel = new ControladorExcel(f1, modeloE,FormularioLista.Lista);
         //devanecemos la pantalla de carga
         inicio.dispose();
        
