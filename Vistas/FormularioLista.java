@@ -32,14 +32,12 @@ public class FormularioLista extends javax.swing.JFrame {
     }
 
     public Producto Llenado() {
-        int precio =  Integer.valueOf(txtPrecio.getText());
-        int stock = Integer.valueOf(txtCantidad.getText());
         Producto producto = new Producto();
         producto.setCodigo(txtCodigo.getText());
         producto.setNombreProducto(txtNombre.getText());
         producto.setValorUnitario(Integer.valueOf(txtPrecio.getText()));
         producto.setStock(Integer.valueOf(txtCantidad.getText()));
-        producto.setTotal(precio*stock);
+        producto.setTotal(Integer.valueOf(txtPrecio.getText())*Integer.valueOf(txtCantidad.getText()));
         
         return producto;
     }
@@ -621,7 +619,7 @@ public class FormularioLista extends javax.swing.JFrame {
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            Lista.EliminarInicio_LS(tabla);
+            Lista.EliminarInicio_LS();
             limpiarCajasTexto();
             Lista.mostrarLista(tabla);
         }
@@ -630,7 +628,7 @@ public class FormularioLista extends javax.swing.JFrame {
     private void btnEliminarFinalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarFinalMouseClicked
         if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            Lista.EliminarFinal_LS(tabla);
+            Lista.EliminarFinal_LS();
             limpiarCajasTexto();
             Lista.mostrarLista(tabla);
         }
@@ -639,7 +637,7 @@ public class FormularioLista extends javax.swing.JFrame {
     private void btnEliminarPosicionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarPosicionMouseClicked
         if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            Lista.EliminarPosicion_LS(tabla);
+            Lista.EliminarPosicion_LS();
             limpiarCajasTexto();
             Lista.mostrarLista(tabla);
         }
@@ -649,7 +647,7 @@ public class FormularioLista extends javax.swing.JFrame {
         if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             //Lista.EliminarValor_LS();
-            Lista.elimininar(tabla);
+            Lista.elimininar();
             limpiarCajasTexto();
             Lista.mostrarLista(tabla);
         }

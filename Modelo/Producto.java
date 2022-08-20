@@ -1,17 +1,13 @@
 
 package Modelo;
 
-/**
- *
- * @author PC
- */
 public class Producto {
     Producto sig;//puntero siguiente
     private String Codigo;//Identificador con el que realizaremos las operaciones
     private String NombreProducto;
     private int ValorUnitario; //precio
     private int Stock;//cantidad
-    private int total;
+    private int total;//cantidad*precio
     
     
     //Setters y getters

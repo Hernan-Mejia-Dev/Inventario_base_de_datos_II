@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package logica;
 
 import Modelo.Producto;
@@ -40,10 +37,11 @@ public class ListaSimple{
         return cont;
     }
 
+    
     public void mostrarLista(JTable tabla) {
         nodoListaSimple temporal;
         temporal = cabecera;
-        if (ListaVacia()) {
+        if (ListaVacia()) {//si la lista esta vacia se inscriben solamente los titulos
             JOptionPane.showMessageDialog(null, "LISTA VACIA!!!");
             String columnas[] = {"Codigo", "Nombre", "Precio", "Cantidad", "Total"};
             DefaultTableModel modelo = new DefaultTableModel(null, columnas);
@@ -176,22 +174,20 @@ public class ListaSimple{
         }
     }
 
-    public void EliminarInicio_LS(JTable tabla) {
+    public void EliminarInicio_LS() {
         if (ListaVacia()) {//preguntamos si la lista esta vacia
             JOptionPane.showMessageDialog(null, "LISTA VACIA");
-            ResetTabla(tabla);
         } else {
             JOptionPane.showMessageDialog(null, "El producto " + cabecera.info.getNombreProducto() + " ha sido eliminado");
             cabecera = cabecera.siguiente;//si no lo esta, simplemente igualamos la cabecera al siguiente de cabecera
         }
     }
 
-    public void EliminarFinal_LS(JTable tabla) {
+    public void EliminarFinal_LS() {
         nodoListaSimple aux;
 
         if (ListaVacia()) {//comparamos si la lista esta vacia o no con el metodo
             JOptionPane.showMessageDialog(null, "Lista Vacía!!!");
-            ResetTabla(tabla);
         } else if (cabecera == ultimo) {//si pregunta si la lista solo tiene un producto
             JOptionPane.showMessageDialog(null, "El producto " + cabecera.info.getNombreProducto() + " ha sido eliminado");
             cabecera = null;//al eliminar el unico producto tanto la cabecera como el ultimo son iguales a null
@@ -208,12 +204,11 @@ public class ListaSimple{
         }
     }
 
-    public void EliminarPosicion_LS(JTable tabla) {
+    public void EliminarPosicion_LS() {
 
         int pos = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite la posición donde desea eliminar el producto:", "ELIMINANDO POSICION", JOptionPane.WARNING_MESSAGE));
         if (ListaVacia()) {//preguntamos si la lista esta vacia
             JOptionPane.showMessageDialog(null, "LISTA VACIA!");
-            ResetTabla(tabla);
         } else {
             if (pos == 1) {//Preguntamos si la posicion es la primera
                 JOptionPane.showMessageDialog(null, "El producto " + cabecera.info.getNombreProducto() + " ha sido eliminado");
@@ -241,14 +236,13 @@ public class ListaSimple{
         }
     }
 
-    public void EliminarValor_LS(JTable tabla) {
+    public void EliminarValor_LS() {
 
         boolean enco = false;
         int cont = 1;
         String code = (JOptionPane.showInputDialog(null, "Digite el codigo donde desea eliminar el producto:", "ELIMINANDO POSICION", JOptionPane.WARNING_MESSAGE));
         if (ListaVacia()) {//preguntamos si la lista esta vacia
             JOptionPane.showMessageDialog(null, "LISTA VACIA!");
-            ResetTabla(tabla);
         } else {
             p = cabecera;
             while (enco == false & cont < tamano()) {
@@ -268,7 +262,7 @@ public class ListaSimple{
         }
     }
     
-      public void elimininar(JTable tabla){
+      public void elimininar(){
        
         if (!ListaVacia()) {
              String code = (JOptionPane.showInputDialog(null, "Digite el codigo donde desea eliminar el producto:", "ELIMINANDO POR VALOR", JOptionPane.WARNING_MESSAGE));
@@ -303,13 +297,13 @@ public class ListaSimple{
             }
             JOptionPane.showMessageDialog(null, "Producto Eliminado Correctamente");
             
-        }else{
-            ResetTabla(tabla);
-        } 
+        }
     }
     
+    //metodo agregarTabla
     public void AgregarTabla(Producto producto) {
-
+        //se utiliza cuando importamos datos de un excel a la tabla y queremos se añadan a nuestra lista
+        
         nodoListaSimple nuevo = new nodoListaSimple();
         nuevo.info = producto;
 
@@ -322,11 +316,5 @@ public class ListaSimple{
             ultimo = nuevo;
             ultimo.siguiente = null;
         }
-    }
-    
-    public void ResetTabla(JTable tabla){
-            String columnas[] = {"Codigo", "Nombre", "Precio", "Cantidad", "Total"};
-            DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-            tabla.setModel(modelo);
     }
 }
