@@ -3,7 +3,11 @@ package Vistas;
 
 import Modelo.Producto;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import logica.ListaSimple;
 
@@ -17,9 +21,19 @@ public class FormularioLista extends javax.swing.JFrame {
     public FormularioLista() {
         initComponents();
         this.setBackground(new Color(0, 0, 0, 0));
+        //colores iniciales de los botones importar y exportar
+        btnExportar.setColorNormal(new Color(38,45,61));
+        btnImportar.setColorNormal(new Color(38,45,61));
         
         modelo = new DefaultTableModel(null, columnas);
         tabla.setModel(modelo);
+        
+        //actualizamos el manager del sistema para que se utilice el del sistema donde se ejecuta y no el por defecto
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void limpiarCajasTexto() {

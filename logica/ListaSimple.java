@@ -2,6 +2,7 @@
 package logica;
 
 import Modelo.Producto;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -62,6 +63,7 @@ public class ListaSimple{
                 temporal = temporal.siguiente;
             }
             tabla.setModel(modelo);
+            AntiRepCode(tabla);
         }
     }
 
@@ -316,5 +318,58 @@ public class ListaSimple{
             ultimo = nuevo;
             ultimo.siguiente = null;
         }
+    }
+    
+    public void AntiRepCode(JTable tabla){
+        nodoListaSimple nuevo = new nodoListaSimple();
+        nuevo = cabecera;
+        int NumPos=tamano();
+        String[] codigos = new String[NumPos];
+        
+        for(int i = 0 ; i<NumPos ; i++){
+            codigos[i] = nuevo.info.getCodigo();
+            nuevo = nuevo.siguiente;
+        }
+        
+        for(int i = 0 ; i<codigos.length; i++ ){
+            for(int j = 1; j<codigos.length ; j++){
+                if(codigos[i].equals(codigos[j]) && i!=j){
+                    JOptionPane.showMessageDialog(null, "Los producto en la posicion "+(i+1)+" y posicion "+(j+1)+" poseen codigos repetidos");
+                    EncontrarCodigos(i,j, tabla);
+                }
+            }
+        }
+    }
+    
+    public void EncontrarCodigos(int pos1, int pos2, JTable tabla){
+        nodoListaSimple aux = new nodoListaSimple();
+        aux = cabecera;
+        nodoListaSimple aux2 = new nodoListaSimple();
+        aux2 = cabecera;
+        
+        for(int i = 0; i<pos1; i++){
+            aux = aux.siguiente;
+        }
+        
+        for(int i = 0; i<pos2; i++){
+            aux2 = aux2.siguiente;
+        }
+        
+        aux.info.setCodigo(CodeGen());
+        aux2.info.setCodigo(CodeGen());
+        JOptionPane.showMessageDialog(null, "los codigos en ambos productos han sido modificados de manera aleatoria");
+        mostrarLista(tabla);
+    }
+    
+    public String CodeGen(){
+        String code="";
+        String letras = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        int tamano = (int)Math.floor(Math.random()*10+1);
+        
+        for(int i = 0; i<tamano; i++){
+            int random = (int)Math.floor(Math.random()*letras.length());
+            code += letras.charAt(random);
+        }
+        return code;
     }
 }

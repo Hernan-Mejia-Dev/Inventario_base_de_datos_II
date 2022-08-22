@@ -178,7 +178,7 @@ public class Inicio extends javax.swing.JFrame {
         ControladorExcel ContraControladorExcel = new ControladorExcel(f1, modeloE,FormularioLista.Lista);
         //devanecemos la pantalla de carga
         inicio.dispose();
-       
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
