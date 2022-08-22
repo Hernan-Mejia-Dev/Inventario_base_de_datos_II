@@ -1,4 +1,3 @@
-
 package Vistas;
 
 import Modelo.Producto;
@@ -11,22 +10,23 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import logica.ListaSimple;
 
-public class FormularioLista extends javax.swing.JFrame {   
+public class FormularioLista extends javax.swing.JFrame {
+
     static ListaSimple Lista = new ListaSimple();
     int contAction = 0;
     int pos = 0;
     String columnas[] = {"Codigo", "Nombre", "Precio", "Cantidad", "Total"};
     DefaultTableModel modelo;
-    
+
     public FormularioLista() {
         initComponents();
         this.setBackground(new Color(0, 0, 0, 0));
         //colores iniciales de la mayoria de componentes
         InicializarColores();
-        
+
         modelo = new DefaultTableModel(null, columnas);
         tabla.setModel(modelo);
-        
+
         //actualizamos el manager del sistema para que se utilice el del sistema donde se ejecuta y no el por defecto
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -34,14 +34,14 @@ public class FormularioLista extends javax.swing.JFrame {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void limpiarCajasTexto() {
-        
+
         txtCantidad.setText("");
         txtCodigo.setText("");
         txtPrecio.setText("");
         txtNombre.setText("");
-        
+
     }
 
     public Producto Llenado() {
@@ -50,15 +50,28 @@ public class FormularioLista extends javax.swing.JFrame {
         producto.setNombreProducto(txtNombre.getText());
         producto.setValorUnitario(Integer.valueOf(txtPrecio.getText()));
         producto.setStock(Integer.valueOf(txtCantidad.getText()));
-        producto.setTotal(Integer.valueOf(txtPrecio.getText())*Integer.valueOf(txtCantidad.getText()));
-        
+        producto.setTotal(Integer.valueOf(txtPrecio.getText()) * Integer.valueOf(txtCantidad.getText()));
+
         return producto;
     }
-    
-    public void InicializarColores(){
-        tabla.setColorBackgoundHead(new Color(38,45,61));
-        btnExportar.setColorNormal(new Color(38,45,61));
-        btnImportar.setColorNormal(new Color(38,45,61));
+
+    public void HabilitarBotones(boolean x) {
+        btnAgregar.setEnabled(x);
+        btnAgregarFinal.setEnabled(x);
+        btnAgregarPosicion.setEnabled(x);
+        btnAgregarPosicion.setEnabled(x);
+        btnAgregarValor.setEnabled(x);
+        btnEliminar.setEnabled(x);
+        btnEliminarFinal.setEnabled(x);
+        btnEliminarSeleccion.setEnabled(x);
+        btnExportar.setEnabled(x);
+        btnImportar.setEnabled(x);
+    }
+
+    public void InicializarColores() {
+        tabla.setColorBackgoundHead(new Color(38, 45, 61));
+        btnExportar.setColorNormal(new Color(38, 45, 61));
+        btnImportar.setColorNormal(new Color(38, 45, 61));
         btnAgregar.setColorNormal(new Color(255, 255, 255));
         btnAgregarFinal.setColorNormal(new Color(255, 255, 255));
         btnAgregarPosicion.setColorNormal(new Color(255, 255, 255));
@@ -68,7 +81,7 @@ public class FormularioLista extends javax.swing.JFrame {
         btnEliminarSeleccion.setColorNormal(new Color(255, 255, 255));
         btnModificar.setColorNormal(new Color(255, 255, 255));
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -602,7 +615,7 @@ public class FormularioLista extends javax.swing.JFrame {
         int key = evt.getKeyChar();
         boolean mayusculas = key >= 65 && key <= 90;
         boolean minusculas = key >= 97 && key <= 122;
-        
+
         if (!(minusculas || mayusculas)) {
             evt.consume();
         }
@@ -681,32 +694,14 @@ public class FormularioLista extends javax.swing.JFrame {
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if(contAction==0){
+            if (contAction == 0) {
                 pos = Lista.modificar(this, tabla);
-                btnAgregar.setEnabled(false);
-                btnAgregarFinal.setEnabled(false);
-                btnAgregarPosicion.setEnabled(false);
-                btnAgregarPosicion.setEnabled(false);
-                btnAgregarValor.setEnabled(false);
-                btnEliminar.setEnabled(false);
-                btnEliminarFinal.setEnabled(false);
-                btnEliminarSeleccion.setEnabled(false);
-                btnExportar.setEnabled(false);
-                btnImportar.setEnabled(false);
-                contAction=1;
-            }else if(contAction==1){
+                HabilitarBotones(false);
+                contAction = 1;
+            } else if (contAction == 1) {
                 Lista.AgregarCambios(this, pos);
-                Lista.mostrarLista(tabla);            
-                btnAgregar.setEnabled(true);
-                btnAgregarFinal.setEnabled(true);
-                btnAgregarPosicion.setEnabled(true);
-                btnAgregarPosicion.setEnabled(true);
-                btnAgregarValor.setEnabled(true);
-                btnEliminar.setEnabled(true);
-                btnEliminarFinal.setEnabled(true);  
-                btnEliminarSeleccion.setEnabled(true);
-                btnExportar.setEnabled(true);
-                btnImportar.setEnabled(true);
+                Lista.mostrarLista(tabla);
+                HabilitarBotones(true);
                 contAction = 0;
             }
         }
