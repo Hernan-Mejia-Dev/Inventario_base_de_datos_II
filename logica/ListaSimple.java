@@ -2,7 +2,7 @@
 package logica;
 
 import Modelo.Producto;
-import java.util.Arrays;
+import Vistas.FormularioLista;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -206,9 +206,9 @@ public class ListaSimple{
         }
     }
 
-    public void EliminarPosicion_LS() {
+    public void EliminarPosicion_LS(JTable tabla) {
 
-        int pos = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite la posición donde desea eliminar el producto:", "ELIMINANDO POSICION", JOptionPane.WARNING_MESSAGE));
+        int pos = tabla.getSelectedRow()+1;
         if (ListaVacia()) {//preguntamos si la lista esta vacia
             JOptionPane.showMessageDialog(null, "LISTA VACIA!");
         } else {
@@ -237,69 +237,34 @@ public class ListaSimple{
             }
         }
     }
-
-    public void EliminarValor_LS() {
-
-        boolean enco = false;
-        int cont = 1;
-        String code = (JOptionPane.showInputDialog(null, "Digite el codigo donde desea eliminar el producto:", "ELIMINANDO POSICION", JOptionPane.WARNING_MESSAGE));
-        if (ListaVacia()) {//preguntamos si la lista esta vacia
-            JOptionPane.showMessageDialog(null, "LISTA VACIA!");
-        } else {
-            p = cabecera;
-            while (enco == false & cont < tamano()) {
-                if (p.siguiente.info.getCodigo().equals(code)) {
-                    enco = true;
-                    p.siguiente = q.siguiente;
-                    p = p.siguiente;//igualamos p a q
-                } else {
-                    q = p;//igualamos q a p
-                    p = p.siguiente;//igualamos p al puntero siguiente de p
-                    cont += 1;
-                }
-            }
+    
+    public int modificar(FormularioLista vista, JTable tabla){
+        nodoListaSimple nuevo = new nodoListaSimple();
+        nuevo = cabecera;
+        for(int i = 0; i<tabla.getSelectedRow() ; i++){
+            nuevo = nuevo.siguiente;
         }
-        if (enco == false) {//si nada funciona enviamos que el codigo no fue encontrado
-            JOptionPane.showMessageDialog(null, "CODIGO NO ENCONTRADO, INTENTE NUEVAMENTE!");
+        if(vista.txtCodigo.getText().isEmpty() || vista.txtNombre.getText().isEmpty() || vista.txtPrecio.getText().isEmpty() || vista.txtCantidad.getText().isEmpty()){
+            vista.txtCodigo.setText(nuevo.info.getCodigo());
+            vista.txtNombre.setText(nuevo.info.getNombreProducto());
+            vista.txtPrecio.setText(String.valueOf(nuevo.info.getValorUnitario()));
+            vista.txtCantidad.setText(String.valueOf(nuevo.info.getStock()));
         }
+        
+        return tabla.getSelectedRow();
     }
     
-      public void elimininar(){
-       
-        if (!ListaVacia()) {
-             String code = (JOptionPane.showInputDialog(null, "Digite el codigo donde desea eliminar el producto:", "ELIMINANDO POR VALOR", JOptionPane.WARNING_MESSAGE));
-       
-            
-            if (cabecera==ultimo && (code == null ? cabecera.info.getCodigo() == null : code.equals(cabecera.info.getCodigo()))) {
-                cabecera=ultimo=null;
-            } else if(code == null ? cabecera.info.getCodigo() == null : code.equals(cabecera.info.getCodigo())) {
-                cabecera = cabecera.siguiente;
-            }else{
-            
-                nodoListaSimple anterior, temporal;
-                anterior = cabecera;
-                temporal= cabecera.siguiente;
-                
-                while ( temporal!=null && temporal.info.getCodigo()!= code) {   
-                    anterior= anterior.siguiente;
-                    temporal=temporal.siguiente;
-                    
-                }
-                if(temporal!=null){
-                    
-                    anterior.siguiente=temporal.siguiente;
-                    if(temporal==ultimo){
-                        
-                        ultimo=anterior;
-                    
-                    }
-                
-                }
-                
-            }
-            JOptionPane.showMessageDialog(null, "Producto Eliminado Correctamente");
-            
+    public void AgregarCambios(FormularioLista vista,int pos){
+        nodoListaSimple nuevo = new nodoListaSimple();
+        nuevo = cabecera;
+        for(int i = 0; i<pos ; i++){
+            nuevo = nuevo.siguiente;
         }
+        nuevo.info.setCodigo(vista.txtCodigo.getText());
+        nuevo.info.setNombreProducto(vista.txtNombre.getText());
+        nuevo.info.setValorUnitario(Integer.valueOf(vista.txtPrecio.getText()));
+        nuevo.info.setStock(Integer.valueOf(vista.txtCantidad.getText()));
+        nuevo.info.setTotal(Integer.valueOf(vista.txtPrecio.getText())*Integer.valueOf(vista.txtCantidad.getText()));
     }
     
     //metodo agregarTabla

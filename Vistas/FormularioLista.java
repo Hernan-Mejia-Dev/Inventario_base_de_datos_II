@@ -11,19 +11,18 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import logica.ListaSimple;
 
-public class FormularioLista extends javax.swing.JFrame {
-    
-    
+public class FormularioLista extends javax.swing.JFrame {   
     static ListaSimple Lista = new ListaSimple();
+    int contAction = 0;
+    int pos = 0;
     String columnas[] = {"Codigo", "Nombre", "Precio", "Cantidad", "Total"};
     DefaultTableModel modelo;
     
     public FormularioLista() {
         initComponents();
         this.setBackground(new Color(0, 0, 0, 0));
-        //colores iniciales de los botones importar y exportar
-        btnExportar.setColorNormal(new Color(38,45,61));
-        btnImportar.setColorNormal(new Color(38,45,61));
+        //colores iniciales de la mayoria de componentes
+        InicializarColores();
         
         modelo = new DefaultTableModel(null, columnas);
         tabla.setModel(modelo);
@@ -54,6 +53,20 @@ public class FormularioLista extends javax.swing.JFrame {
         producto.setTotal(Integer.valueOf(txtPrecio.getText())*Integer.valueOf(txtCantidad.getText()));
         
         return producto;
+    }
+    
+    public void InicializarColores(){
+        tabla.setColorBackgoundHead(new Color(38,45,61));
+        btnExportar.setColorNormal(new Color(38,45,61));
+        btnImportar.setColorNormal(new Color(38,45,61));
+        btnAgregar.setColorNormal(new Color(255, 255, 255));
+        btnAgregarFinal.setColorNormal(new Color(255, 255, 255));
+        btnAgregarPosicion.setColorNormal(new Color(255, 255, 255));
+        btnAgregarValor.setColorNormal(new Color(255, 255, 255));
+        btnEliminar.setColorNormal(new Color(255, 255, 255));
+        btnEliminarFinal.setColorNormal(new Color(255, 255, 255));
+        btnEliminarSeleccion.setColorNormal(new Color(255, 255, 255));
+        btnModificar.setColorNormal(new Color(255, 255, 255));
     }
     
     @SuppressWarnings("unchecked")
@@ -87,9 +100,9 @@ public class FormularioLista extends javax.swing.JFrame {
         btnEliminar = new LIB.FSButtonMD();
         btnAgregarPosicion = new LIB.FSButtonMD();
         btnEliminarFinal = new LIB.FSButtonMD();
-        btnEliminarPosicion = new LIB.FSButtonMD();
+        btnEliminarSeleccion = new LIB.FSButtonMD();
         jEImagePanel7 = new LIB.JEImagePanel();
-        btnEliminarValor = new LIB.FSButtonMD();
+        btnModificar = new LIB.FSButtonMD();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabla = new rojerusan.RSTableMetro();
         jLabel7 = new javax.swing.JLabel();
@@ -394,16 +407,16 @@ public class FormularioLista extends javax.swing.JFrame {
             }
         });
 
-        btnEliminarPosicion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Eliminar posicion.png"))); // NOI18N
-        btnEliminarPosicion.setText("Eliminar Posición");
-        btnEliminarPosicion.setColorHover(new java.awt.Color(204, 255, 255));
-        btnEliminarPosicion.setColorNormal(new java.awt.Color(255, 255, 255));
-        btnEliminarPosicion.setColorPressed(new java.awt.Color(204, 255, 255));
-        btnEliminarPosicion.setColorTextNormal(new java.awt.Color(51, 51, 51));
-        btnEliminarPosicion.setColorTextPressed(new java.awt.Color(0, 0, 0));
-        btnEliminarPosicion.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEliminarSeleccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Eliminar posicion.png"))); // NOI18N
+        btnEliminarSeleccion.setText("Eliminar Eleccion");
+        btnEliminarSeleccion.setColorHover(new java.awt.Color(204, 255, 255));
+        btnEliminarSeleccion.setColorNormal(new java.awt.Color(255, 255, 255));
+        btnEliminarSeleccion.setColorPressed(new java.awt.Color(204, 255, 255));
+        btnEliminarSeleccion.setColorTextNormal(new java.awt.Color(51, 51, 51));
+        btnEliminarSeleccion.setColorTextPressed(new java.awt.Color(0, 0, 0));
+        btnEliminarSeleccion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarPosicionMouseClicked(evt);
+                btnEliminarSeleccionMouseClicked(evt);
             }
         });
 
@@ -425,16 +438,16 @@ public class FormularioLista extends javax.swing.JFrame {
             .addGap(0, 34, Short.MAX_VALUE)
         );
 
-        btnEliminarValor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/eliminarValor.png"))); // NOI18N
-        btnEliminarValor.setText("Eliminar Valor");
-        btnEliminarValor.setColorHover(new java.awt.Color(204, 255, 255));
-        btnEliminarValor.setColorNormal(new java.awt.Color(255, 255, 255));
-        btnEliminarValor.setColorPressed(new java.awt.Color(204, 255, 255));
-        btnEliminarValor.setColorTextNormal(new java.awt.Color(51, 51, 51));
-        btnEliminarValor.setColorTextPressed(new java.awt.Color(0, 0, 0));
-        btnEliminarValor.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/eliminarValor.png"))); // NOI18N
+        btnModificar.setText("Modificar");
+        btnModificar.setColorHover(new java.awt.Color(204, 255, 255));
+        btnModificar.setColorNormal(new java.awt.Color(255, 255, 255));
+        btnModificar.setColorPressed(new java.awt.Color(204, 255, 255));
+        btnModificar.setColorTextNormal(new java.awt.Color(51, 51, 51));
+        btnModificar.setColorTextPressed(new java.awt.Color(0, 0, 0));
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarValorMouseClicked(evt);
+                btnModificarMouseClicked(evt);
             }
         });
 
@@ -451,6 +464,14 @@ public class FormularioLista extends javax.swing.JFrame {
         ));
         tabla.setColorBackgoundHead(new java.awt.Color(38, 45, 61));
         tabla.setShowGrid(false);
+        tabla.setFocusable(false);
+        tabla = new rojerusan.RSTableMetro(){
+            public boolean isCellEditable(int RowIndex, int ColIndex){
+                return false;
+            }
+        };
+        tabla.getTableHeader().setResizingAllowed(false);
+        tabla.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tabla);
 
         jLabel7.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
@@ -466,9 +487,9 @@ public class FormularioLista extends javax.swing.JFrame {
                 .addGroup(jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelRound1Layout.createSequentialGroup()
                         .addGap(187, 187, 187)
-                        .addComponent(btnEliminarPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEliminarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminarValor, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRound1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
@@ -534,8 +555,8 @@ public class FormularioLista extends javax.swing.JFrame {
                     .addComponent(btnEliminarFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminarPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminarValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEliminarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(114, 114, 114))
         );
 
@@ -648,24 +669,48 @@ public class FormularioLista extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarFinalMouseClicked
 
-    private void btnEliminarPosicionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarPosicionMouseClicked
+    private void btnEliminarSeleccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarSeleccionMouseClicked
         if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            Lista.EliminarPosicion_LS();
+            Lista.EliminarPosicion_LS(tabla);
             limpiarCajasTexto();
             Lista.mostrarLista(tabla);
         }
-    }//GEN-LAST:event_btnEliminarPosicionMouseClicked
+    }//GEN-LAST:event_btnEliminarSeleccionMouseClicked
 
-    private void btnEliminarValorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarValorMouseClicked
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            //Lista.EliminarValor_LS();
-            Lista.elimininar();
-            limpiarCajasTexto();
-            Lista.mostrarLista(tabla);
+            if(contAction==0){
+                pos = Lista.modificar(this, tabla);
+                btnAgregar.setEnabled(false);
+                btnAgregarFinal.setEnabled(false);
+                btnAgregarPosicion.setEnabled(false);
+                btnAgregarPosicion.setEnabled(false);
+                btnAgregarValor.setEnabled(false);
+                btnEliminar.setEnabled(false);
+                btnEliminarFinal.setEnabled(false);
+                btnEliminarSeleccion.setEnabled(false);
+                btnExportar.setEnabled(false);
+                btnImportar.setEnabled(false);
+                contAction=1;
+            }else if(contAction==1){
+                Lista.AgregarCambios(this, pos);
+                Lista.mostrarLista(tabla);            
+                btnAgregar.setEnabled(true);
+                btnAgregarFinal.setEnabled(true);
+                btnAgregarPosicion.setEnabled(true);
+                btnAgregarPosicion.setEnabled(true);
+                btnAgregarValor.setEnabled(true);
+                btnEliminar.setEnabled(true);
+                btnEliminarFinal.setEnabled(true);  
+                btnEliminarSeleccion.setEnabled(true);
+                btnExportar.setEnabled(true);
+                btnImportar.setEnabled(true);
+                contAction = 0;
+            }
         }
-    }//GEN-LAST:event_btnEliminarValorMouseClicked
+    }//GEN-LAST:event_btnModificarMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private LIB.FSButtonMD btnAgregar;
@@ -674,10 +719,10 @@ public class FormularioLista extends javax.swing.JFrame {
     private LIB.FSButtonMD btnAgregarValor;
     private LIB.FSButtonMD btnEliminar;
     private LIB.FSButtonMD btnEliminarFinal;
-    private LIB.FSButtonMD btnEliminarPosicion;
-    private LIB.FSButtonMD btnEliminarValor;
+    private LIB.FSButtonMD btnEliminarSeleccion;
     public LIB.FSButtonMD btnExportar;
     public LIB.FSButtonMD btnImportar;
+    private LIB.FSButtonMD btnModificar;
     private LIB.JEImagePanel jEImagePanel2;
     private LIB.JEImagePanel jEImagePanel3;
     private LIB.JEImagePanel jEImagePanel5;
@@ -697,9 +742,9 @@ public class FormularioLista extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     public rojerusan.RSTableMetro tabla;
-    private LIB.FSTexFieldMD txtCantidad;
-    private LIB.FSTexFieldMD txtCodigo;
-    private LIB.FSTexFieldMD txtNombre;
-    private LIB.FSTexFieldMD txtPrecio;
+    public LIB.FSTexFieldMD txtCantidad;
+    public LIB.FSTexFieldMD txtCodigo;
+    public LIB.FSTexFieldMD txtNombre;
+    public LIB.FSTexFieldMD txtPrecio;
     // End of variables declaration//GEN-END:variables
 }
