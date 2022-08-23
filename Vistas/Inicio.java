@@ -3,6 +3,10 @@ package Vistas;
 
 import Modelo.ModeloExcel;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import logica.ControladorExcel;
 
 public class Inicio extends javax.swing.JFrame {
@@ -155,7 +159,13 @@ public class Inicio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    static ModeloExcel modeloE;
     public static void main(String args[]) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     
         Inicio inicio = new Inicio();
         inicio.setVisible(true);
@@ -173,7 +183,7 @@ public class Inicio extends javax.swing.JFrame {
         //cuando termine la carga hacemos que el formulario principal sea visible
         f1.setVisible(true);
         //iniciamos el modelo excel
-        ModeloExcel modeloE = new ModeloExcel();
+        modeloE = new ModeloExcel();
         //inicializamos el controlador del excel
         ControladorExcel ContraControladorExcel = new ControladorExcel(f1, modeloE,FormularioLista.Lista);
         //devanecemos la pantalla de carga

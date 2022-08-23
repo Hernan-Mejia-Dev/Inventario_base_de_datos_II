@@ -2,11 +2,14 @@ package Vistas;
 
 import Modelo.Producto;
 import java.awt.Color;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import logica.ListaSimple;
 
@@ -15,12 +18,14 @@ public class FormularioLista extends javax.swing.JFrame {
     static ListaSimple Lista = new ListaSimple();
     int contAction = 0;
     int pos = 0;
+    boolean BtnDisponibles = true;
     String columnas[] = {"Codigo", "Nombre", "Precio", "Cantidad", "Total"};
     DefaultTableModel modelo;
+    JFileChooser selecArchivo = new JFileChooser();
+    File archivo;
 
     public FormularioLista() {
         initComponents();
-        this.setBackground(new Color(0, 0, 0, 0));
         //colores iniciales de la mayoria de componentes
         InicializarColores();
 
@@ -61,14 +66,14 @@ public class FormularioLista extends javax.swing.JFrame {
         btnAgregarPosicion.setEnabled(x);
         btnAgregarPosicion.setEnabled(x);
         btnAgregarValor.setEnabled(x);
-        btnEliminar.setEnabled(x);
-        btnEliminarFinal.setEnabled(x);
         btnEliminarSeleccion.setEnabled(x);
         btnExportar.setEnabled(x);
         btnImportar.setEnabled(x);
+        BtnDisponibles = x;
     }
 
     public void InicializarColores() {
+        this.setBackground(new Color(0, 0, 0, 0));
         tabla.setColorBackgoundHead(new Color(38, 45, 61));
         btnExportar.setColorNormal(new Color(38, 45, 61));
         btnImportar.setColorNormal(new Color(38, 45, 61));
@@ -76,21 +81,22 @@ public class FormularioLista extends javax.swing.JFrame {
         btnAgregarFinal.setColorNormal(new Color(255, 255, 255));
         btnAgregarPosicion.setColorNormal(new Color(255, 255, 255));
         btnAgregarValor.setColorNormal(new Color(255, 255, 255));
-        btnEliminar.setColorNormal(new Color(255, 255, 255));
-        btnEliminarFinal.setColorNormal(new Color(255, 255, 255));
         btnEliminarSeleccion.setColorNormal(new Color(255, 255, 255));
         btnModificar.setColorNormal(new Color(255, 255, 255));
+        btnAgregar.setColorTextNormal(new Color(51, 51, 51));
+        btnAgregarFinal.setColorTextNormal(new Color(51, 51, 51));
+        btnAgregarPosicion.setColorTextNormal(new Color(51,51,51));
+        btnAgregarValor.setColorTextNormal(new Color(51,51,51));
+        btnEliminarSeleccion.setColorTextNormal(new Color(51,51,51));
+        btnModificar.setColorTextNormal(new Color(51,51,51));
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jPanelRound2 = new LIB.JPanelRound();
-        jPanelRound1 = new LIB.JPanelRound();
-        jPanelTransparente1 = new LIB.JPanelTransparente();
+        Background = new LIB.JPanelRound();
+        Working_Area = new LIB.JPanelTransparente();
         txtCodigo = new LIB.FSTexFieldMD();
         txtNombre = new LIB.FSTexFieldMD();
         txtPrecio = new LIB.FSTexFieldMD();
@@ -105,58 +111,32 @@ public class FormularioLista extends javax.swing.JFrame {
         jEImagePanel2 = new LIB.JEImagePanel();
         btnExportar = new LIB.FSButtonMD();
         btnImportar = new LIB.FSButtonMD();
-        jLabel2 = new javax.swing.JLabel();
+        TxtProcesos = new javax.swing.JLabel();
         btnAgregar = new LIB.FSButtonMD();
-        jEImagePanel5 = new LIB.JEImagePanel();
+        ImgProcesos = new LIB.JEImagePanel();
         btnAgregarValor = new LIB.FSButtonMD();
         btnAgregarFinal = new LIB.FSButtonMD();
-        btnEliminar = new LIB.FSButtonMD();
         btnAgregarPosicion = new LIB.FSButtonMD();
-        btnEliminarFinal = new LIB.FSButtonMD();
         btnEliminarSeleccion = new LIB.FSButtonMD();
-        jEImagePanel7 = new LIB.JEImagePanel();
+        BtnExit = new LIB.JEImagePanel();
         btnModificar = new LIB.FSButtonMD();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        MarcoTabla = new javax.swing.JScrollPane();
         tabla = new rojerusan.RSTableMetro();
-        jLabel7 = new javax.swing.JLabel();
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        javax.swing.GroupLayout jPanelRound2Layout = new javax.swing.GroupLayout(jPanelRound2);
-        jPanelRound2.setLayout(jPanelRound2Layout);
-        jPanelRound2Layout.setHorizontalGroup(
-            jPanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanelRound2Layout.setVerticalGroup(
-            jPanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        txtTabla = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jPanelRound1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelRound1.setColorPrimario(new java.awt.Color(255, 255, 255));
-        jPanelRound1.setColorSecundario(new java.awt.Color(102, 255, 255));
+        Background.setBackground(new java.awt.Color(255, 255, 255));
+        Background.setColorPrimario(new java.awt.Color(255, 255, 255));
+        Background.setColorSecundario(new java.awt.Color(102, 255, 255));
 
         txtCodigo.setForeground(new java.awt.Color(0, 0, 0));
         txtCodigo.setBordeColorFocus(new java.awt.Color(51, 255, 255));
         txtCodigo.setPlaceholder("Codigo");
         txtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCodigoKeyTyped(evt);
+                ValidacionTeclasCodigo(evt);
             }
         });
 
@@ -165,7 +145,7 @@ public class FormularioLista extends javax.swing.JFrame {
         txtNombre.setPlaceholder("Nombre");
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombreKeyTyped(evt);
+                ValidacionTeclasNombre(evt);
             }
         });
 
@@ -174,7 +154,7 @@ public class FormularioLista extends javax.swing.JFrame {
         txtPrecio.setPlaceholder("Precio");
         txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPrecioKeyTyped(evt);
+                ValidacionTeclasPrecio(evt);
             }
         });
 
@@ -183,7 +163,7 @@ public class FormularioLista extends javax.swing.JFrame {
         txtCantidad.setPlaceholder("Cantidad");
         txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCantidadKeyTyped(evt);
+                ValidacionTeclasCantidad(evt);
             }
         });
 
@@ -254,26 +234,26 @@ public class FormularioLista extends javax.swing.JFrame {
         btnImportar.setColorNormal(new java.awt.Color(38, 45, 61));
         btnImportar.setColorPressed(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanelTransparente1Layout = new javax.swing.GroupLayout(jPanelTransparente1);
-        jPanelTransparente1.setLayout(jPanelTransparente1Layout);
-        jPanelTransparente1Layout.setHorizontalGroup(
-            jPanelTransparente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTransparente1Layout.createSequentialGroup()
+        javax.swing.GroupLayout Working_AreaLayout = new javax.swing.GroupLayout(Working_Area);
+        Working_Area.setLayout(Working_AreaLayout);
+        Working_AreaLayout.setHorizontalGroup(
+            Working_AreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Working_AreaLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jEImagePanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jEImagePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTransparente1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Working_AreaLayout.createSequentialGroup()
                 .addContainerGap(37, Short.MAX_VALUE)
-                .addGroup(jPanelTransparente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTransparente1Layout.createSequentialGroup()
+                .addGroup(Working_AreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Working_AreaLayout.createSequentialGroup()
                         .addComponent(jEImagePanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)
                         .addGap(33, 33, 33))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTransparente1Layout.createSequentialGroup()
-                        .addGroup(jPanelTransparente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Working_AreaLayout.createSequentialGroup()
+                        .addGroup(Working_AreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,20 +262,20 @@ public class FormularioLista extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
-                            .addGroup(jPanelTransparente1Layout.createSequentialGroup()
+                            .addGroup(Working_AreaLayout.createSequentialGroup()
                                 .addComponent(btnExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnImportar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(47, 47, 47))))
         );
-        jPanelTransparente1Layout.setVerticalGroup(
-            jPanelTransparente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTransparente1Layout.createSequentialGroup()
-                .addGroup(jPanelTransparente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelTransparente1Layout.createSequentialGroup()
+        Working_AreaLayout.setVerticalGroup(
+            Working_AreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Working_AreaLayout.createSequentialGroup()
+                .addGroup(Working_AreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Working_AreaLayout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(jLabel1))
-                    .addGroup(jPanelTransparente1Layout.createSequentialGroup()
+                    .addGroup(Working_AreaLayout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(jEImagePanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(44, 44, 44)
@@ -315,19 +295,19 @@ public class FormularioLista extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(54, 54, 54)
-                .addGroup(jPanelTransparente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Working_AreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnExportar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnImportar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelTransparente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Working_AreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jEImagePanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jEImagePanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
 
-        jLabel2.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("PROCESOS");
+        TxtProcesos.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        TxtProcesos.setForeground(new java.awt.Color(255, 255, 255));
+        TxtProcesos.setText("PROCESOS");
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregar al inicio.png"))); // NOI18N
         btnAgregar.setText("Agregar ");
@@ -342,16 +322,16 @@ public class FormularioLista extends javax.swing.JFrame {
             }
         });
 
-        jEImagePanel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/tornillo.png"))); // NOI18N
+        ImgProcesos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/tornillo.png"))); // NOI18N
 
-        javax.swing.GroupLayout jEImagePanel5Layout = new javax.swing.GroupLayout(jEImagePanel5);
-        jEImagePanel5.setLayout(jEImagePanel5Layout);
-        jEImagePanel5Layout.setHorizontalGroup(
-            jEImagePanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout ImgProcesosLayout = new javax.swing.GroupLayout(ImgProcesos);
+        ImgProcesos.setLayout(ImgProcesosLayout);
+        ImgProcesosLayout.setHorizontalGroup(
+            ImgProcesosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 47, Short.MAX_VALUE)
         );
-        jEImagePanel5Layout.setVerticalGroup(
-            jEImagePanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        ImgProcesosLayout.setVerticalGroup(
+            ImgProcesosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 50, Short.MAX_VALUE)
         );
 
@@ -381,19 +361,6 @@ public class FormularioLista extends javax.swing.JFrame {
             }
         });
 
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton-eliminar.png"))); // NOI18N
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setColorHover(new java.awt.Color(204, 255, 255));
-        btnEliminar.setColorNormal(new java.awt.Color(255, 255, 255));
-        btnEliminar.setColorPressed(new java.awt.Color(204, 255, 255));
-        btnEliminar.setColorTextNormal(new java.awt.Color(51, 51, 51));
-        btnEliminar.setColorTextPressed(new java.awt.Color(0, 0, 0));
-        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarMouseClicked(evt);
-            }
-        });
-
         btnAgregarPosicion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregar-posicion.png"))); // NOI18N
         btnAgregarPosicion.setText("Agregar Posicion");
         btnAgregarPosicion.setColorHover(new java.awt.Color(204, 255, 255));
@@ -407,21 +374,8 @@ public class FormularioLista extends javax.swing.JFrame {
             }
         });
 
-        btnEliminarFinal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Eliminar al final.png"))); // NOI18N
-        btnEliminarFinal.setText("Eliminar Final");
-        btnEliminarFinal.setColorHover(new java.awt.Color(204, 255, 255));
-        btnEliminarFinal.setColorNormal(new java.awt.Color(255, 255, 255));
-        btnEliminarFinal.setColorPressed(new java.awt.Color(204, 255, 255));
-        btnEliminarFinal.setColorTextNormal(new java.awt.Color(51, 51, 51));
-        btnEliminarFinal.setColorTextPressed(new java.awt.Color(0, 0, 0));
-        btnEliminarFinal.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarFinalMouseClicked(evt);
-            }
-        });
-
-        btnEliminarSeleccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Eliminar posicion.png"))); // NOI18N
-        btnEliminarSeleccion.setText("Eliminar Eleccion");
+        btnEliminarSeleccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/boton-eliminar.png"))); // NOI18N
+        btnEliminarSeleccion.setText("Eliminar");
         btnEliminarSeleccion.setColorHover(new java.awt.Color(204, 255, 255));
         btnEliminarSeleccion.setColorNormal(new java.awt.Color(255, 255, 255));
         btnEliminarSeleccion.setColorPressed(new java.awt.Color(204, 255, 255));
@@ -433,21 +387,21 @@ public class FormularioLista extends javax.swing.JFrame {
             }
         });
 
-        jEImagePanel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrar.png"))); // NOI18N
-        jEImagePanel7.addMouseListener(new java.awt.event.MouseAdapter() {
+        BtnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrar.png"))); // NOI18N
+        BtnExit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jEImagePanel7MouseClicked(evt);
+                BtnExitMouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout jEImagePanel7Layout = new javax.swing.GroupLayout(jEImagePanel7);
-        jEImagePanel7.setLayout(jEImagePanel7Layout);
-        jEImagePanel7Layout.setHorizontalGroup(
-            jEImagePanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout BtnExitLayout = new javax.swing.GroupLayout(BtnExit);
+        BtnExit.setLayout(BtnExitLayout);
+        BtnExitLayout.setHorizontalGroup(
+            BtnExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 34, Short.MAX_VALUE)
         );
-        jEImagePanel7Layout.setVerticalGroup(
-            jEImagePanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        BtnExitLayout.setVerticalGroup(
+            BtnExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 34, Short.MAX_VALUE)
         );
 
@@ -485,133 +439,114 @@ public class FormularioLista extends javax.swing.JFrame {
         };
         tabla.getTableHeader().setResizingAllowed(false);
         tabla.getTableHeader().setReorderingAllowed(false);
-        jScrollPane3.setViewportView(tabla);
+        MarcoTabla.setViewportView(tabla);
 
-        jLabel7.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText(" PRODUCTOS INGRESADOS");
+        txtTabla.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        txtTabla.setForeground(new java.awt.Color(255, 255, 255));
+        txtTabla.setText(" PRODUCTOS INGRESADOS");
 
-        javax.swing.GroupLayout jPanelRound1Layout = new javax.swing.GroupLayout(jPanelRound1);
-        jPanelRound1.setLayout(jPanelRound1Layout);
-        jPanelRound1Layout.setHorizontalGroup(
-            jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelRound1Layout.createSequentialGroup()
-                .addComponent(jPanelTransparente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelRound1Layout.createSequentialGroup()
-                        .addGap(187, 187, 187)
-                        .addComponent(btnEliminarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRound1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addGroup(jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRound1Layout.createSequentialGroup()
-                                    .addComponent(jEImagePanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addContainerGap())
-                                .addGroup(jPanelRound1Layout.createSequentialGroup()
-                                    .addGroup(jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnAgregarValor, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanelRound1Layout.createSequentialGroup()
-                                            .addGap(6, 6, 6)
-                                            .addComponent(jEImagePanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jLabel2))
-                                        .addGroup(jPanelRound1Layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(btnAgregarFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRound1Layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        javax.swing.GroupLayout BackgroundLayout = new javax.swing.GroupLayout(Background);
+        Background.setLayout(BackgroundLayout);
+        BackgroundLayout.setHorizontalGroup(
+            BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BackgroundLayout.createSequentialGroup()
+                .addComponent(Working_Area, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(BackgroundLayout.createSequentialGroup()
+                            .addGap(53, 53, 53)
+                            .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnAgregarValor, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, BackgroundLayout.createSequentialGroup()
+                                    .addGap(25, 25, 25)
+                                    .addComponent(ImgProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(btnAgregarPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnEliminarFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(84, 84, 84)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRound1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(212, 212, 212))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRound1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28))))))
+                                    .addComponent(TxtProcesos))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, BackgroundLayout.createSequentialGroup()
+                                    .addGap(28, 28, 28)
+                                    .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnAgregarFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnEliminarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(28, 28, 28)
+                                    .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnAgregarPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BackgroundLayout.createSequentialGroup()
+                            .addComponent(txtTabla)
+                            .addGap(212, 212, 212))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BackgroundLayout.createSequentialGroup()
+                            .addComponent(MarcoTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(28, 28, 28)))
+                    .addGroup(BackgroundLayout.createSequentialGroup()
+                        .addComponent(BtnExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
-        jPanelRound1Layout.setVerticalGroup(
-            jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelTransparente1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanelRound1Layout.createSequentialGroup()
+        BackgroundLayout.setVerticalGroup(
+            BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Working_Area, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(BackgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jEImagePanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7)
+                .addComponent(BtnExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(txtTabla)
                 .addGap(12, 12, 12)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelRound1Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanelRound1Layout.createSequentialGroup()
+                .addComponent(MarcoTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(BackgroundLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jEImagePanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(ImgProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(BackgroundLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(TxtProcesos)))
                 .addGap(38, 38, 38)
-                .addGroup(jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregarValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminarFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(114, 114, 114))
+                .addGap(166, 166, 166))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jEImagePanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jEImagePanel7MouseClicked
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea salir?", "Salir",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
-    }//GEN-LAST:event_jEImagePanel7MouseClicked
-
-    private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
+    private void ValidacionTeclasPrecio(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValidacionTeclasPrecio
         int key = evt.getKeyChar();
         boolean numeros = key >= 48 & key <= 57;
         if (!numeros) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtPrecioKeyTyped
+    }//GEN-LAST:event_ValidacionTeclasPrecio
 
-    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+    private void ValidacionTeclasCantidad(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValidacionTeclasCantidad
         int key = evt.getKeyChar();
         boolean numeros = key >= 48 & key <= 57;
         if (!numeros) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtCantidadKeyTyped
+    }//GEN-LAST:event_ValidacionTeclasCantidad
 
-    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+    private void ValidacionTeclasNombre(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValidacionTeclasNombre
         int key = evt.getKeyChar();
         boolean mayusculas = key >= 65 && key <= 90;
         boolean minusculas = key >= 97 && key <= 122;
@@ -619,127 +554,162 @@ public class FormularioLista extends javax.swing.JFrame {
         if (!(minusculas || mayusculas)) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtNombreKeyTyped
+    }//GEN-LAST:event_ValidacionTeclasNombre
 
-    private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
+    private void ValidacionTeclasCodigo(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValidacionTeclasCodigo
         if (txtCodigo.getText().length() >= 10) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtCodigoKeyTyped
+    }//GEN-LAST:event_ValidacionTeclasCodigo
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            Lista.AgregarInicio_LS(Llenado());
-            limpiarCajasTexto();
-            Lista.mostrarLista(tabla);
+        if (BtnDisponibles == true) {
+            if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                try {
+                    Lista.AgregarInicio_LS(Llenado());
+                    limpiarCajasTexto();
+                    Lista.mostrarLista(tabla);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Los campos de texto se encuentran vacios");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Los botones se encuentran bloqueados!");
         }
     }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void btnAgregarFinalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarFinalMouseClicked
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            Lista.AgregarFinal_LS(Llenado());
-            limpiarCajasTexto();
-            Lista.mostrarLista(tabla);
+        if (BtnDisponibles == true) {
+            if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                try {
+                    Lista.AgregarFinal_LS(Llenado());
+                    limpiarCajasTexto();
+                    Lista.mostrarLista(tabla);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Los campos de texto se encuentran vacios");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Los botones se encuentran bloqueados!");
         }
-
     }//GEN-LAST:event_btnAgregarFinalMouseClicked
 
     private void btnAgregarPosicionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarPosicionMouseClicked
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            Lista.AgregarPosicion_LS(Llenado());
-            limpiarCajasTexto();
-            Lista.mostrarLista(tabla);
+        if (BtnDisponibles == true) {
+            if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                try {
+                    Lista.AgregarPosicion_LS(Llenado());
+                    limpiarCajasTexto();
+                    Lista.mostrarLista(tabla);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Los campos de texto se encuentran vacios");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Los botones se encuentran bloqueados!");
         }
     }//GEN-LAST:event_btnAgregarPosicionMouseClicked
 
     private void btnAgregarValorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarValorMouseClicked
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            Lista.AgregarValor_LS(Llenado());
-            limpiarCajasTexto();
-            Lista.mostrarLista(tabla);
+        if (BtnDisponibles == true) {
+            if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                try {
+                    Lista.AgregarValor_LS(Llenado());
+                    limpiarCajasTexto();
+                    Lista.mostrarLista(tabla);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Los campos de texto se encuentran vacios");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Los botones se encuentran bloqueados!");
         }
     }//GEN-LAST:event_btnAgregarValorMouseClicked
 
-    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            Lista.EliminarInicio_LS();
-            limpiarCajasTexto();
-            Lista.mostrarLista(tabla);
-        }
-    }//GEN-LAST:event_btnEliminarMouseClicked
-
-    private void btnEliminarFinalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarFinalMouseClicked
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            Lista.EliminarFinal_LS();
-            limpiarCajasTexto();
-            Lista.mostrarLista(tabla);
-        }
-    }//GEN-LAST:event_btnEliminarFinalMouseClicked
-
     private void btnEliminarSeleccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarSeleccionMouseClicked
-        if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            Lista.EliminarPosicion_LS(tabla);
-            limpiarCajasTexto();
-            Lista.mostrarLista(tabla);
+        if (BtnDisponibles == true) {
+            if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                Lista.EliminarPosicion_LS(tabla);
+                limpiarCajasTexto();
+                Lista.mostrarLista(tabla);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Los botones se encuentran bloqueados!");
         }
     }//GEN-LAST:event_btnEliminarSeleccionMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         if (JOptionPane.showConfirmDialog(this, "¿Está seguro que desea realizar este proceso?", "Confirmación",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (contAction == 0) {
-                pos = Lista.modificar(this, tabla);
-                HabilitarBotones(false);
-                contAction = 1;
-            } else if (contAction == 1) {
-                Lista.AgregarCambios(this, pos);
-                Lista.mostrarLista(tabla);
-                HabilitarBotones(true);
-                contAction = 0;
+            try {
+                if (contAction == 0) {
+                    pos = Lista.modificar(this, tabla);
+                    HabilitarBotones(false);
+                    contAction = 1;
+                } else if (contAction == 1) {
+                    Lista.AgregarCambios(this, pos);
+                    Lista.mostrarLista(tabla);
+                    HabilitarBotones(true);
+                    contAction = 0;
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Ningun elemento ha sido seleccionado");
             }
         }
     }//GEN-LAST:event_btnModificarMouseClicked
 
+    private void BtnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnExitMouseClicked
+        try {
+            if (JOptionPane.showConfirmDialog(this, "¿Desea guardar los datos antes de salir?", "Salir", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                selecArchivo.setFileFilter(new FileNameExtensionFilter("Excel (*.xls)", "xls"));//primer tipo extension
+                selecArchivo.setFileFilter(new FileNameExtensionFilter("Excel (*.xlsx)", "xlsx"));//segundo tipo de extension
+                if (selecArchivo.showDialog(null, "Exportar") == JFileChooser.APPROVE_OPTION) {
+                    archivo = selecArchivo.getSelectedFile();
+                    if (archivo.getName().endsWith("xls") || archivo.getName().endsWith("xlsx")) {
+                        JOptionPane.showMessageDialog(null, Inicio.modeloE.Exportar(archivo, this.tabla) + "\n Formato ." + archivo.getName().substring(archivo.getName().lastIndexOf(".") + 1));
+                        System.exit(0);
+                    }
+                }
+            } else {
+                System.exit(0);
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_BtnExitMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private LIB.JPanelRound Background;
+    public LIB.JEImagePanel BtnExit;
+    private LIB.JEImagePanel ImgProcesos;
+    private javax.swing.JScrollPane MarcoTabla;
+    private javax.swing.JLabel TxtProcesos;
+    private LIB.JPanelTransparente Working_Area;
     private LIB.FSButtonMD btnAgregar;
     private LIB.FSButtonMD btnAgregarFinal;
     private LIB.FSButtonMD btnAgregarPosicion;
     private LIB.FSButtonMD btnAgregarValor;
-    private LIB.FSButtonMD btnEliminar;
-    private LIB.FSButtonMD btnEliminarFinal;
     private LIB.FSButtonMD btnEliminarSeleccion;
     public LIB.FSButtonMD btnExportar;
     public LIB.FSButtonMD btnImportar;
     private LIB.FSButtonMD btnModificar;
     private LIB.JEImagePanel jEImagePanel2;
     private LIB.JEImagePanel jEImagePanel3;
-    private LIB.JEImagePanel jEImagePanel5;
     private LIB.JEImagePanel jEImagePanel6;
-    private LIB.JEImagePanel jEImagePanel7;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private LIB.JPanelRound jPanelRound1;
-    private LIB.JPanelRound jPanelRound2;
-    private LIB.JPanelTransparente jPanelTransparente1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     public rojerusan.RSTableMetro tabla;
     public LIB.FSTexFieldMD txtCantidad;
     public LIB.FSTexFieldMD txtCodigo;
     public LIB.FSTexFieldMD txtNombre;
     public LIB.FSTexFieldMD txtPrecio;
+    private javax.swing.JLabel txtTabla;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,4 +1,3 @@
-
 package logica;
 
 import Modelo.Producto;
@@ -7,8 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-
-public class ListaSimple{
+public class ListaSimple {
 
     nodoListaSimple cabecera, ultimo, p, q;
 
@@ -38,7 +36,7 @@ public class ListaSimple{
         return cont;
     }
 
-    
+    //meotodo para imprimir la lista en la tabla
     public void mostrarLista(JTable tabla) {
         nodoListaSimple temporal;
         temporal = cabecera;
@@ -102,7 +100,6 @@ public class ListaSimple{
     }
 
     public void AgregarPosicion_LS(Producto producto) {
-
 
         JOptionPane.showMessageDialog(null, "El numero de elementos en el inventario es: " + tamano());
 
@@ -176,39 +173,8 @@ public class ListaSimple{
         }
     }
 
-    public void EliminarInicio_LS() {
-        if (ListaVacia()) {//preguntamos si la lista esta vacia
-            JOptionPane.showMessageDialog(null, "LISTA VACIA");
-        } else {
-            JOptionPane.showMessageDialog(null, "El producto " + cabecera.info.getNombreProducto() + " ha sido eliminado");
-            cabecera = cabecera.siguiente;//si no lo esta, simplemente igualamos la cabecera al siguiente de cabecera
-        }
-    }
-
-    public void EliminarFinal_LS() {
-        nodoListaSimple aux;
-
-        if (ListaVacia()) {//comparamos si la lista esta vacia o no con el metodo
-            JOptionPane.showMessageDialog(null, "Lista Vacía!!!");
-        } else if (cabecera == ultimo) {//si pregunta si la lista solo tiene un producto
-            JOptionPane.showMessageDialog(null, "El producto " + cabecera.info.getNombreProducto() + " ha sido eliminado");
-            cabecera = null;//al eliminar el unico producto tanto la cabecera como el ultimo son iguales a null
-            ultimo = null;
-        } else {//si no, movemos nuestro auxiliar en un ciclo hasta que sea igual al producto anterior al ultimo
-            aux = cabecera;
-            while (aux.siguiente != ultimo) {
-                aux = aux.siguiente;
-            }
-            //luego asignamos a nuestro auxiliar como el ultimo de la lista y apuntamos el siguiente a null
-            JOptionPane.showMessageDialog(null, "El producto " + ultimo.info.getNombreProducto() + " ha sido eliminado");
-            ultimo = aux;
-            ultimo.siguiente = null;
-        }
-    }
-
     public void EliminarPosicion_LS(JTable tabla) {
-
-        int pos = tabla.getSelectedRow()+1;
+        int pos = tabla.getSelectedRow() + 1;
         if (ListaVacia()) {//preguntamos si la lista esta vacia
             JOptionPane.showMessageDialog(null, "LISTA VACIA!");
         } else {
@@ -232,45 +198,47 @@ public class ListaSimple{
                 JOptionPane.showMessageDialog(null, "El producto " + p.info.getNombreProducto() + " ha sido eliminado");
                 q.siguiente = p.siguiente;//enlazamos q al siguiente de p para dejar a p en el medio
                 p = q;//igualamos p a q
-            } else {//si nada funciona enviamos un mensaje de posicion invalida
-                JOptionPane.showMessageDialog(null, "POSICION NO VALIDA, FUERA DE RANGO");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun elemento");
             }
         }
     }
-    
-    public int modificar(FormularioLista vista, JTable tabla){
+
+    public int modificar(FormularioLista vista, JTable tabla) {
         nodoListaSimple nuevo = new nodoListaSimple();
-        nuevo = cabecera;
-        for(int i = 0; i<tabla.getSelectedRow() ; i++){
+        if(tabla.getSelectedRow() != -1){
+            nuevo = cabecera;
+        }
+        for (int i = 0; i < tabla.getSelectedRow(); i++) {
             nuevo = nuevo.siguiente;
         }
-        if(vista.txtCodigo.getText().isEmpty() || vista.txtNombre.getText().isEmpty() || vista.txtPrecio.getText().isEmpty() || vista.txtCantidad.getText().isEmpty()){
+        if (vista.txtCodigo.getText().isEmpty() || vista.txtNombre.getText().isEmpty() || vista.txtPrecio.getText().isEmpty() || vista.txtCantidad.getText().isEmpty()) {
             vista.txtCodigo.setText(nuevo.info.getCodigo());
             vista.txtNombre.setText(nuevo.info.getNombreProducto());
             vista.txtPrecio.setText(String.valueOf(nuevo.info.getValorUnitario()));
             vista.txtCantidad.setText(String.valueOf(nuevo.info.getStock()));
         }
-        
+
         return tabla.getSelectedRow();
     }
-    
-    public void AgregarCambios(FormularioLista vista,int pos){
+
+    public void AgregarCambios(FormularioLista vista, int pos) {
         nodoListaSimple nuevo = new nodoListaSimple();
         nuevo = cabecera;
-        for(int i = 0; i<pos ; i++){
+        for (int i = 0; i < pos; i++) {
             nuevo = nuevo.siguiente;
         }
         nuevo.info.setCodigo(vista.txtCodigo.getText());
         nuevo.info.setNombreProducto(vista.txtNombre.getText());
         nuevo.info.setValorUnitario(Integer.valueOf(vista.txtPrecio.getText()));
         nuevo.info.setStock(Integer.valueOf(vista.txtCantidad.getText()));
-        nuevo.info.setTotal(Integer.valueOf(vista.txtPrecio.getText())*Integer.valueOf(vista.txtCantidad.getText()));
+        nuevo.info.setTotal(Integer.valueOf(vista.txtPrecio.getText()) * Integer.valueOf(vista.txtCantidad.getText()));
     }
-    
+
     //metodo agregarTabla
     public void AgregarTabla(Producto producto) {
         //se utiliza cuando importamos datos de un excel a la tabla y queremos se añadan a nuestra lista
-        
+
         nodoListaSimple nuevo = new nodoListaSimple();
         nuevo.info = producto;
 
@@ -284,55 +252,55 @@ public class ListaSimple{
             ultimo.siguiente = null;
         }
     }
-    
-    public void AntiRepCode(JTable tabla){
+
+    public void AntiRepCode(JTable tabla) {
         nodoListaSimple nuevo = new nodoListaSimple();
         nuevo = cabecera;
-        int NumPos=tamano();
+        int NumPos = tamano();
         String[] codigos = new String[NumPos];
-        
-        for(int i = 0 ; i<NumPos ; i++){
+
+        for (int i = 0; i < NumPos; i++) {
             codigos[i] = nuevo.info.getCodigo();
             nuevo = nuevo.siguiente;
         }
-        
-        for(int i = 0 ; i<codigos.length; i++ ){
-            for(int j = 1; j<codigos.length ; j++){
-                if(codigos[i].equals(codigos[j]) && i!=j){
-                    JOptionPane.showMessageDialog(null, "Los producto en la posicion "+(i+1)+" y posicion "+(j+1)+" poseen codigos repetidos");
-                    EncontrarCodigos(i,j, tabla);
+
+        for (int i = 0; i < codigos.length; i++) {
+            for (int j = 1; j < codigos.length; j++) {
+                if (codigos[i].equals(codigos[j]) && i != j) {
+                    JOptionPane.showMessageDialog(null, "Los producto en la posicion " + (i + 1) + " y posicion " + (j + 1) + " poseen codigos repetidos");
+                    EncontrarCodigos(i, j, tabla);
                 }
             }
         }
     }
-    
-    public void EncontrarCodigos(int pos1, int pos2, JTable tabla){
+
+    public void EncontrarCodigos(int pos1, int pos2, JTable tabla) {
         nodoListaSimple aux = new nodoListaSimple();
         aux = cabecera;
         nodoListaSimple aux2 = new nodoListaSimple();
         aux2 = cabecera;
-        
-        for(int i = 0; i<pos1; i++){
+
+        for (int i = 0; i < pos1; i++) {
             aux = aux.siguiente;
         }
-        
-        for(int i = 0; i<pos2; i++){
+
+        for (int i = 0; i < pos2; i++) {
             aux2 = aux2.siguiente;
         }
-        
+
         aux.info.setCodigo(CodeGen());
         aux2.info.setCodigo(CodeGen());
         JOptionPane.showMessageDialog(null, "los codigos en ambos productos han sido modificados de manera aleatoria");
         mostrarLista(tabla);
     }
-    
-    public String CodeGen(){
-        String code="";
+
+    public String CodeGen() {
+        String code = "";
         String letras = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        int tamano = (int)Math.floor(Math.random()*10+1);
-        
-        for(int i = 0; i<tamano; i++){
-            int random = (int)Math.floor(Math.random()*letras.length());
+        int tamano = (int) Math.floor(Math.random() * 10 + 1);
+
+        for (int i = 0; i < tamano; i++) {
+            int random = (int) Math.floor(Math.random() * letras.length());
             code += letras.charAt(random);
         }
         return code;
