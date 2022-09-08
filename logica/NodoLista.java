@@ -3,8 +3,8 @@ package logica;
 
 import Modelo.Producto;
 
-public class nodoListaSimple {
+public class NodoLista {
     public Producto info;
-    public nodoListaSimple siguiente;
+    public NodoLista siguiente;
     
 }

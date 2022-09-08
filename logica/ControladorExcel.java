@@ -15,12 +15,12 @@ public class ControladorExcel implements ActionListener{
     ModeloExcel modeloE = new ModeloExcel(); //inicializamos nuestro modelo excel
     FormularioLista vistaE= new FormularioLista(); //inicializamos nuestro formulario
     JFileChooser selecArchivo = new JFileChooser(); //inicializamos nuestro seleccionador de archivos
-    ListaSimple Lista = new ListaSimple();//inicializamos nuestra lista
+    Lista Lista = new Lista();//inicializamos nuestra lista
     File archivo;//inicializamos nuestro archivo
     int contAccion=0;//inicializamos nuestro contador de accion
 
    //metodo contructor    
-    public ControladorExcel(FormularioLista vistaE, ModeloExcel modeloE, ListaSimple Lista){
+    public ControladorExcel(FormularioLista vistaE, ModeloExcel modeloE, Lista Lista){
         this.vistaE= vistaE;//igualamos el formulario dentro de la clase al insertado por parametros
         this.modeloE=modeloE;//igualamos el modelo excel dentro de la clase al insertado por parametros
         this.Lista=Lista;//igualamos la lista dentro de la clase a la insertada por parametros

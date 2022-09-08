@@ -1,4 +1,3 @@
-
 package Vistas;
 
 import Modelo.ModeloExcel;
@@ -13,9 +12,8 @@ public class Inicio extends javax.swing.JFrame {
 
     public Inicio() {
         initComponents();
-        this.setBackground(new Color(0,0,0,0));
+        this.setBackground(new Color(0, 0, 0, 0));
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -158,39 +156,34 @@ public class Inicio extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
     static ModeloExcel modeloE;
+    static FormularioLista f1;
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
         Inicio inicio = new Inicio();
         inicio.setVisible(true);
-        FormularioLista f1 = new FormularioLista();
-        
+        f1 = new FormularioLista();
         try {
             for (int i = 0; i <= 100; i++) {
-                Thread.sleep(30);
+                Thread.sleep(35);
                 inicio.barra.setValue(i);
-                inicio.Porcentaje.setText(Integer.toString(i)+"%");
+                inicio.Porcentaje.setText(Integer.toString(i) + "%");
             }
         } catch (Exception e) {
         }
-        
         //cuando termine la carga hacemos que el formulario principal sea visible
         f1.setVisible(true);
         //iniciamos el modelo excel
         modeloE = new ModeloExcel();
         //inicializamos el controlador del excel
-        ControladorExcel ContraControladorExcel = new ControladorExcel(f1, modeloE,FormularioLista.Lista);
+        ControladorExcel ContraControladorExcel = new ControladorExcel(f1, modeloE, f1.Lista);
         //devanecemos la pantalla de carga
         inicio.dispose();
-        
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Porcentaje;
     private javax.swing.JProgressBar barra;
@@ -204,5 +197,4 @@ public class Inicio extends javax.swing.JFrame {
     private LIB.JPanelRound jPanelRound1;
     private LIB.JPanelRound jPanelRound2;
     // End of variables declaration//GEN-END:variables
-
 }

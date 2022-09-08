@@ -6,11 +6,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class ListaSimple {
+public class Lista {
+    NodoLista cabecera, ultimo, p, q;
+    String columnas[] = {"Posicion", "Codigo", "Nombre", "Precio", "Cantidad", "Total"};
 
-    nodoListaSimple cabecera, ultimo, p, q;
-
-    public ListaSimple() {
+    public Lista() {
         cabecera = null;
         ultimo = null;
     }
@@ -27,7 +27,7 @@ public class ListaSimple {
     //Metodo tamaño para contar el numero de productos en la lista
     public int tamano() {
         int cont = 0;
-        nodoListaSimple temporal;//Creamos éste auxiliar para recorrer la lista
+        NodoLista temporal;//Creamos éste auxiliar para recorrer la lista
         temporal = cabecera; //posicionamos a p en el primer nodo
         while (temporal != null) {
             cont++;
@@ -38,26 +38,24 @@ public class ListaSimple {
 
     //meotodo para imprimir la lista en la tabla
     public void mostrarLista(JTable tabla) {
-        nodoListaSimple temporal;
+        int cont = 0;
+        NodoLista temporal;
         temporal = cabecera;
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         if (ListaVacia()) {//si la lista esta vacia se inscriben solamente los titulos
             JOptionPane.showMessageDialog(null, "LISTA VACIA!!!");
-            String columnas[] = {"Codigo", "Nombre", "Precio", "Cantidad", "Total"};
-            DefaultTableModel modelo = new DefaultTableModel(null, columnas);
             tabla.setModel(modelo);
         } else {
-            String columnas[] = {"Codigo", "Nombre", "Precio", "Cantidad", "Total"};
-            DefaultTableModel modelo = new DefaultTableModel(null, columnas);
             while (temporal != null) {
-
-                Object fila[] = new Object[5];
-                fila[0] = temporal.info.getCodigo();
-                fila[1] = temporal.info.getNombreProducto();
-                fila[2] = String.valueOf(temporal.info.getValorUnitario());
-                fila[3] = String.valueOf(temporal.info.getStock());
-                fila[4] = temporal.info.getTotal();
+                cont += 1;
+                Object fila[] = new Object[6];
+                fila[0] = cont;
+                fila[1] = temporal.info.getCodigo();
+                fila[2] = temporal.info.getNombreProducto();
+                fila[3] = String.valueOf(temporal.info.getValorUnitario());
+                fila[4] = String.valueOf(temporal.info.getStock());
+                fila[5] = temporal.info.getTotal();
                 modelo.addRow(fila);
-
                 temporal = temporal.siguiente;
             }
             tabla.setModel(modelo);
@@ -67,10 +65,8 @@ public class ListaSimple {
 
     /*Metodos del inventario*/
     public void AgregarInicio_LS(Producto producto) {
-
-        nodoListaSimple nuevo = new nodoListaSimple();
+        NodoLista nuevo = new NodoLista();
         nuevo.info = producto;
-
         if (ListaVacia()) {//comparamos si la lista esta vacia o no con el metodo
             cabecera = nuevo;//si esta vacia asignamos directamente el producto en la cabecera
             ultimo = cabecera;
@@ -79,14 +75,12 @@ public class ListaSimple {
             nuevo.siguiente = cabecera;
             cabecera = nuevo;
         }
-        JOptionPane.showMessageDialog(null, "PRODUCTO AGREGADO CORRECTAMENTE!");
+        JOptionPane.showMessageDialog(null, "PRODUCTO AGREGADO CORRECTAMENTE");
     }
 
     public void AgregarFinal_LS(Producto producto) {
-
-        nodoListaSimple nuevo = new nodoListaSimple();
+        NodoLista nuevo = new NodoLista();
         nuevo.info = producto;
-
         if (ListaVacia()) {//comparamos si la lista esta vacia o no con el metodo
             cabecera = nuevo;//si esta vacia asignamos directamente el producto en el final
             cabecera.siguiente = null;
@@ -96,25 +90,22 @@ public class ListaSimple {
             ultimo = nuevo;
             ultimo.siguiente = null;
         }
-        JOptionPane.showMessageDialog(null, "PRODUCTO AGREGADO CORRECTAMENTE!");
+        JOptionPane.showMessageDialog(null, "PRODUCTO AGREGADO CORRECTAMENTE");
     }
 
-    public void AgregarPosicion_LS(Producto producto) {
-
+    public void AgregarPosicion_LS(Producto producto, FormularioLista f1) {
         JOptionPane.showMessageDialog(null, "El numero de elementos en el inventario es: " + tamano());
-
-        nodoListaSimple nuevo = new nodoListaSimple();
+        NodoLista nuevo = new NodoLista();
         nuevo.info = producto;
-
         int pos = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite la posición:", "AGREGANDO POSICION", JOptionPane.WARNING_MESSAGE));
         if (ListaVacia()) {
             cabecera = nuevo;
             ultimo = nuevo;
             ultimo.siguiente = null;
+            JOptionPane.showMessageDialog(null, "PRODUCTO AGREGADO CORRECTAMENTE");
         } else {
             if (pos == 1) {
-                nuevo.siguiente = cabecera;
-                cabecera = nuevo;
+                AgregarInicio_LS(producto);
             } else if (pos == tamano()) {
                 //aqui fue arreglado
                 q = cabecera;
@@ -123,6 +114,7 @@ public class ListaSimple {
                 }
                 q.siguiente = nuevo;
                 nuevo.siguiente = ultimo;
+                JOptionPane.showMessageDialog(null, "PRODUCTO AGREGADO CORRECTAMENTE");
             } else if (pos > 1 && pos < tamano()) {
                 p = cabecera;
                 for (int i = 1; i < pos; i++) {
@@ -131,40 +123,44 @@ public class ListaSimple {
                 }
                 q.siguiente = nuevo;
                 nuevo.siguiente = p;
+                JOptionPane.showMessageDialog(null, "PRODUCTO AGREGADO CORRECTAMENTE");
             } else {
                 JOptionPane.showMessageDialog(null, "POSICION NO VALIDA, FUERA DE RANGO");
             }
         }
-        JOptionPane.showMessageDialog(null, "PRODUCTO AGREGADO CORRECTAMENTE!");
     }
 
-    public void AgregarValor_LS(Producto producto) {
-
+    public void AgregarValor_LS(Producto producto, FormularioLista f1) {
         boolean enco = false;
-        int cont = 1;
-        nodoListaSimple aux = new nodoListaSimple();
-
+        NodoLista aux = new NodoLista();
         aux.info = producto;
-
-        String code = (JOptionPane.showInputDialog(null, "Digite el codigo donde desea añadir el producto:", "AGREGANDO POSICION", JOptionPane.WARNING_MESSAGE));
-
+        String code = (JOptionPane.showInputDialog(null, "Digite el codigo donde desea añadir el producto:", JOptionPane.WARNING_MESSAGE));
         if (ListaVacia()) {//preguntamos si la lista esta vacia
             cabecera = aux;//si esta vacia lo agregamos directamente en la posicion 1 
             ultimo = aux;
             ultimo.siguiente = null;
             JOptionPane.showMessageDialog(null, "LISTA VACIA!");
             JOptionPane.showMessageDialog(null, "Producto agregado en la posicion 1");
-        } else {
+            enco = true;
+        }else if(cabecera.info.getCodigo().equals(code)){
+            AgregarInicio_LS(producto);
+            enco = true;
+        }else if(ultimo.info.getCodigo().equals(code)){
+            AgregarFinal_LS(producto);
+            enco = true;
+        }else {
             p = cabecera;
-            while (enco == false & cont < tamano()) {
+            q = p;
+            int cont = 0;
+            while (enco == false && cont < tamano()) {
                 if (p.info.getCodigo().equals(code)) {
-                    enco = true;
                     q.siguiente = aux;//igualamos el siguiente de q a nuestro producto
                     aux.siguiente = p;//igualamos el siguiente de nuestro producto a p
+                    JOptionPane.showMessageDialog(null, "PRODUCTO AGREGADO CORRECTAMENTE");
+                    enco = true;
                 } else {
                     q = p;//igualamos q a p
                     p = p.siguiente;//igualamos p al puntero siguiente de p
-                    cont += 1;
                 }
             }
         }
@@ -175,18 +171,16 @@ public class ListaSimple {
 
     public void EliminarPosicion_LS(JTable tabla) {
         int pos = tabla.getSelectedRow() + 1;
-        if (ListaVacia()) {//preguntamos si la lista esta vacia
-            JOptionPane.showMessageDialog(null, "LISTA VACIA!");
-        } else {
+        if (!ListaVacia()) {//preguntamos si la lista no esta vacia
             if (pos == 1) {//Preguntamos si la posicion es la primera
-                JOptionPane.showMessageDialog(null, "El producto " + cabecera.info.getNombreProducto() + " ha sido eliminado");
+                JOptionPane.showMessageDialog(null, "El producto " + cabecera.info.getCodigo() + " ha sido eliminado");
                 cabecera = cabecera.siguiente;//si no lo esta, simplemente igualamos la cabecera al siguiente de cabecera
             } else if (pos == tamano()) {//preguntamos si la posicion es igual a la ultima
                 p = cabecera;
                 while (p.siguiente != ultimo) {
                     p = p.siguiente;
                 } //luego asignamos a nuestro auxiliar como el ultimo de la lista y apuntamos el siguiente a null
-                JOptionPane.showMessageDialog(null, "El producto " + ultimo.info.getNombreProducto() + " ha sido eliminado");
+                JOptionPane.showMessageDialog(null, "El producto " + ultimo.info.getCodigo() + " ha sido eliminado");
                 ultimo = p;
                 ultimo.siguiente = null;
             } else if (pos > 1 & pos < tamano()) {//si la posicion esta dentro de la primera y ultima posicion
@@ -195,7 +189,7 @@ public class ListaSimple {
                     q = p;
                     p = p.siguiente;
                 }
-                JOptionPane.showMessageDialog(null, "El producto " + p.info.getNombreProducto() + " ha sido eliminado");
+                JOptionPane.showMessageDialog(null, "El producto " + p.info.getCodigo() + " ha sido eliminado");
                 q.siguiente = p.siguiente;//enlazamos q al siguiente de p para dejar a p en el medio
                 p = q;//igualamos p a q
             } else {
@@ -204,9 +198,23 @@ public class ListaSimple {
         }
     }
 
+    public void AgregarImportacion(Producto producto) {
+        NodoLista nuevo = new NodoLista();
+        nuevo.info = producto;
+        if (ListaVacia()) {//comparamos si la lista esta vacia o no con el metodo
+            cabecera = nuevo;//si esta vacia asignamos directamente el producto en el final
+            cabecera.siguiente = null;
+            ultimo = nuevo;
+        } else {//si no esta vacia, se mueve el ultimo y luego se adiciona el producto como ultimo y se apunta al siguiente como nulo
+            ultimo.siguiente = nuevo;
+            ultimo = nuevo;
+            ultimo.siguiente = null;
+        }
+    }
+
     public int modificar(FormularioLista vista, JTable tabla) {
-        nodoListaSimple nuevo = new nodoListaSimple();
-        if(tabla.getSelectedRow() != -1){
+        NodoLista nuevo = new NodoLista();
+        if (tabla.getSelectedRow() != -1) {
             nuevo = cabecera;
         }
         for (int i = 0; i < tabla.getSelectedRow(); i++) {
@@ -218,12 +226,11 @@ public class ListaSimple {
             vista.txtPrecio.setText(String.valueOf(nuevo.info.getValorUnitario()));
             vista.txtCantidad.setText(String.valueOf(nuevo.info.getStock()));
         }
-
         return tabla.getSelectedRow();
     }
 
     public void AgregarCambios(FormularioLista vista, int pos) {
-        nodoListaSimple nuevo = new nodoListaSimple();
+        NodoLista nuevo = new NodoLista();
         nuevo = cabecera;
         for (int i = 0; i < pos; i++) {
             nuevo = nuevo.siguiente;
@@ -235,26 +242,8 @@ public class ListaSimple {
         nuevo.info.setTotal(Integer.valueOf(vista.txtPrecio.getText()) * Integer.valueOf(vista.txtCantidad.getText()));
     }
 
-    //metodo agregarTabla
-    public void AgregarTabla(Producto producto) {
-        //se utiliza cuando importamos datos de un excel a la tabla y queremos se añadan a nuestra lista
-
-        nodoListaSimple nuevo = new nodoListaSimple();
-        nuevo.info = producto;
-
-        if (ListaVacia()) {//comparamos si la lista esta vacia o no con el metodo
-            cabecera = nuevo;//si esta vacia asignamos directamente el producto en el final
-            cabecera.siguiente = null;
-            ultimo = nuevo;
-        } else {//si no esta vacia, se mueve el ultimo y luego se adiciona el producto como ultimo y se apunta al siguiente como nulo
-            ultimo.siguiente = nuevo;
-            ultimo = nuevo;
-            ultimo.siguiente = null;
-        }
-    }
-
     public void AntiRepCode(JTable tabla) {
-        nodoListaSimple nuevo = new nodoListaSimple();
+        NodoLista nuevo = new NodoLista();
         nuevo = cabecera;
         int NumPos = tamano();
         String[] codigos = new String[NumPos];
@@ -275,19 +264,16 @@ public class ListaSimple {
     }
 
     public void EncontrarCodigos(int pos1, int pos2, JTable tabla) {
-        nodoListaSimple aux = new nodoListaSimple();
+        NodoLista aux = new NodoLista();
+        NodoLista aux2 = new NodoLista();
         aux = cabecera;
-        nodoListaSimple aux2 = new nodoListaSimple();
         aux2 = cabecera;
-
         for (int i = 0; i < pos1; i++) {
             aux = aux.siguiente;
         }
-
         for (int i = 0; i < pos2; i++) {
             aux2 = aux2.siguiente;
         }
-
         aux.info.setCodigo(CodeGen());
         aux2.info.setCodigo(CodeGen());
         JOptionPane.showMessageDialog(null, "los codigos en ambos productos han sido modificados de manera aleatoria");
@@ -298,11 +284,12 @@ public class ListaSimple {
         String code = "";
         String letras = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         int tamano = (int) Math.floor(Math.random() * 10 + 1);
-
         for (int i = 0; i < tamano; i++) {
             int random = (int) Math.floor(Math.random() * letras.length());
             code += letras.charAt(random);
         }
         return code;
     }
+    
+
 }
